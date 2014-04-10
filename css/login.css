@@ -1,0 +1,57 @@
+form.login {
+    width: 23%;
+    border-radius: 10px;
+    margin: 5em auto;
+    box-shadow: 4px 4px 14px #000000;
+}
+
+form.login p {
+    margin: 0;
+}
+
+form.login .row {
+    position: relative;
+}
+
+form.login .username input,
+form.login .password input {
+    width: 68%;
+}
+
+form.login .username {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    color: white;
+    padding: .5em;
+    background-color: #262626;
+}
+
+form.login .password {
+    background-color: #DBDEE7;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 0.5em;
+}
+
+form.login .username i.fa {
+    position: absolute;
+    bottom: -4px;
+    font-size: 3em;
+    color: #DBDEE7;
+
+    width: 28%;
+    text-align: center;
+}
+
+form.login .password button[type="submit"] {
+    width: 28%;
+}
+
+p.fyi {
+    color: #DBDEE7;
+    background-color: #262626;
+    width: 50%;
+    margin: 0 auto;
+    padding: 1em;
+    border-radius: 10px;
+}
