@@ -1,11 +1,44 @@
-(function (prmebro, $) {
+(function (prmebro, $, templateRenderer) {
     "use strict";
 
-    function displayPullRequests() {
-        $('.login,.fyi').remove();
+    function loadPullRequests() {
+        var pullRequests = [],
+            github = prmebro.github,
+            numberRequestsPending = 0;
 
-        $("<p>Well, isn't this nice.</p>").appendTo('body');
+        function addPullRequestsToList(error, newPullRequests) {
+            pullRequests = pullRequests.concat(newPullRequests);
+
+            numberRequestsPending--;
+        }
+
+        numberRequestsPending++;
+        github.getUser().subscriptions(function (error, repositories) {
+            for (var i = 0; i < repositories.length; i++) {
+                numberRequestsPending++;
+                github.getRepo(repositories[i].owner.login, repositories[i].name).listPulls('open', addPullRequestsToList);
+            }
+
+            numberRequestsPending--;
+        });
+
+        var anyPendingRequestsLeftChecker = setInterval(function () {
+            if (numberRequestsPending === 0) {
+                displayPullRequests(pullRequests);
+                clearInterval(anyPendingRequestsLeftChecker);
+            }
+        }, 10);
     }
 
-    prmebro.getEventListener().bind("user.loggedin", displayPullRequests);
-}(prmebro, jQuery));
+    function displayPullRequests(pullRequests) {
+        var templateSource = $('#pullrequest-list-view').html(),
+            compiledTemplate = dust.compile(templateSource, "pull-request-list-view");
+
+        dust.loadSource(compiledTemplate);
+        dust.render("pull-request-list-view", {pullRequests: pullRequests}, function (error, output) {
+            $('#container').html(output);
+        });
+    }
+
+    prmebro.getEventListener().bind("user.loggedin", loadPullRequests);
+}(prmebro, jQuery, dust));

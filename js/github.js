@@ -124,6 +124,15 @@
         });
       };
 
+      // List authenticated user's subscribed repositories
+      // -------
+
+      this.subscriptions = function(cb) {
+        _request("GET", "/user/subscriptions", null, function(err, res) {
+          cb(err,res);
+        });
+      };
+
       // List authenticated user's unread notifications
       // -------
 

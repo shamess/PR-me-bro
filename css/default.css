@@ -2,14 +2,42 @@ body {
     background-color: #77726B;
 }
 
-p, h1, h2, a, input, button {
+p, h1, h2, a, input, button, li {
     font-family: 'Ubuntu', sans-serif;
 }
 
-p {
+p, li {
     font-size: 12px;
 }
 
 a {
     color: white;
+}
+
+.pull-request-list li {
+    width: 80%;
+    margin; 0 auto;
+    padding: 0.5em;
+
+    list-style: none;
+    background-color: #262626;
+
+    color: white;
+    border: 1px solid #262626;
+}
+
+.pull-request-list li:first-child {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.pull-request-list li:last-child {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.pull-request-list li:nth-child(even) {
+    background-color: #DBDEE7;
+    border: 1px solid #DBDEE7;
+    color: black;
 }
