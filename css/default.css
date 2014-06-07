@@ -2,6 +2,10 @@ body {
     background-color: #77726B;
 }
 
+p, h1, h2, a, input, button {
+    font-family: 'Ubuntu', sans-serif;
+}
+
 p {
     font-size: 12px;
 }

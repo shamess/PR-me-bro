@@ -3,12 +3,25 @@
     <head>
         <meta charset="UTF-8" />
         <title>pr me, bro</title>
+        <link href='//fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
         <link rel="stylesheet" href="css/default.css" />
         <link rel="stylesheet" href="css/login.css" />
+        <script>
+            var github,
+                prmebro = {
+                    user: { 'username': null, 'password': null, validated: false }
+                };
+        </script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.js"></script>
+        <script src="js/base64.js"></script>
+        <script src="js/github.js"></script>
+        <script src="js/eventListener.js"></script>
+        <script src="js/login.js"></script>
+        <script src="js/pullRequest.js"></script>
     </head>
     <body>
-            
+
     <form action="" method="post" class="login">
         <div class="username row">
             <p><input type="text" id="username" name="_username" value="" placeholder="github username" /> <i class="fa fa-github"></i></p>
