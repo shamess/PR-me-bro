@@ -128,7 +128,7 @@
       // -------
 
       this.subscriptions = function(cb) {
-        _request("GET", "/user/subscriptions", null, function(err, res) {
+        _request("GET", "/user/subscriptions?per_page=1000", null, function(err, res) {
           cb(err,res);
         });
       };
