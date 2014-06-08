@@ -1,6 +1,14 @@
 (function (prmebro, $, templateRenderer) {
     "use strict";
 
+    function cachePullRequests(pullRequests) {
+        prmebro.pullRequests = {};
+
+        for (var i = 0; i < pullRequests.length; i++) {
+            prmebro.pullRequests[pullRequests[i].head.repo.html_url] = pullRequests[i];
+        }
+    }
+
     function loadPullRequests() {
         var pullRequests = [],
             github = prmebro.github,
@@ -24,8 +32,10 @@
 
         var anyPendingRequestsLeftChecker = setInterval(function () {
             if (numberRequestsPending === 0) {
-                displayPullRequests(pullRequests);
                 clearInterval(anyPendingRequestsLeftChecker);
+
+                displayPullRequests(pullRequests);
+                cachePullRequests(pullRequests);
             }
         }, 10);
     }
