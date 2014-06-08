@@ -23,6 +23,7 @@
             attemptLogin(prmebro.github, function (loginSuccess) {
                 if (loginSuccess) {
                     prmebro.user.validated = true;
+                    $('.password button').text("loading...");
                     prmebro.getEventListener().trigger("user.loggedin");
                 } else {
                     $('.password button').text("try again");

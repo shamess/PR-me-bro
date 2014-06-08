@@ -25,7 +25,10 @@
         <script id="pullrequest-list-view" type="text/dust-template">
             <ul class="pull-request-list">
                 {#pullRequests}
-                    <li>{title}</li>
+                    <li>
+                        <p><a href="{html_url}" target="_blank" class="pr-title">{title}</a></p>
+                        <p><a href="{head.repo.html_url}" target="_blank">{head.repo.name}</a></p>
+                    </li>
                 {/pullRequests}
             </ul>
         </script>
