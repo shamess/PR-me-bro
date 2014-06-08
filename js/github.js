@@ -217,6 +217,12 @@
         "sha": null
       };
 
+      this.getComments = function (pullRequestNumber, cb) {
+          var url = repoPath + "/pulls/" + pullRequestNumber + "/comments";
+
+          _request("GET", url, null, cb);
+      };
+
       // Uses the cache if branch has not been changed
       // -------
 
@@ -573,8 +579,8 @@
           delPath += "?message=" + encodeURIComponent(params.message);
           delPath += "&sha=" + encodeURIComponent(params.sha);
           _request("DELETE", delPath, null, cb);
-        })
-      }
+        });
+      };
       
       // Move a file to a new location
       // -------

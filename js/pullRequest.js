@@ -5,7 +5,7 @@
         prmebro.pullRequests = {};
 
         for (var i = 0; i < pullRequests.length; i++) {
-            prmebro.pullRequests[pullRequests[i].head.repo.html_url] = pullRequests[i];
+            prmebro.pullRequests[pullRequests[i].issue_url] = pullRequests[i];
         }
     }
 
@@ -34,8 +34,8 @@
             if (numberRequestsPending === 0) {
                 clearInterval(anyPendingRequestsLeftChecker);
 
-                displayPullRequests(pullRequests);
                 cachePullRequests(pullRequests);
+                displayPullRequests(pullRequests);
             }
         }, 10);
     }
@@ -47,6 +47,8 @@
         dust.loadSource(compiledTemplate);
         dust.render("pull-request-list-view", {pullRequests: pullRequests}, function (error, output) {
             $('#container').html(output);
+
+            prmebro.getEventListener().trigger("pullrequests.loaded");
         });
     }
 

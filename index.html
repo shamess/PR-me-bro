@@ -21,13 +21,19 @@
         <script src="js/eventListener.js"></script>
         <script src="js/login.js"></script>
         <script src="js/pullRequest.js"></script>
+        <script src="js/commentState.js"></script>
 
         <script id="pullrequest-list-view" type="text/dust-template">
             <ul class="pull-request-list">
                 {#pullRequests}
-                    <li>
-                        <p><a href="{html_url}" target="_blank" class="pr-title">{title}</a></p>
-                        <p><a href="{head.repo.html_url}" target="_blank">{head.repo.name}</a></p>
+                    <li class="block" id="pull-request-{id}">
+                        <div class="block">
+                            <p class="left"><a href="{html_url}" target="_blank" class="pr-title">{title}</a></p>
+                            <p class="right pr-comments">Loading comment state...</p>
+                        </div>
+                        <div class="block">
+                            <p class="left"><a href="{head.repo.html_url}" target="_blank">{head.repo.name}</a></p>
+                        </div>
                     </li>
                 {/pullRequests}
             </ul>
