@@ -1,4 +1,4 @@
-(function (prmebro, $, templateRenderer) {
+define(['prmebro', 'jquery', 'dust-full', 'eventListener'], function (prmebro, $, templateRenderer, eventListener) {
     "use strict";
 
     function cachePullRequests(pullRequests) {
@@ -48,9 +48,9 @@
         dust.render("pull-request-list-view", {pullRequests: pullRequests}, function (error, output) {
             $('#container').html(output);
 
-            prmebro.getEventListener().trigger("pullrequests.loaded");
+            eventListener.trigger("pullrequests.loaded");
         });
     }
 
-    prmebro.getEventListener().bind("user.loggedin", loadPullRequests);
-}(prmebro, jQuery, dust));
+    eventListener.bind("user.loggedin", loadPullRequests);
+});

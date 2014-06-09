@@ -1,33 +1,16 @@
-// Github.js 0.9.0
+// Forked from Github.js 0.9.0
 // (c) 2013 Michael Aufreiter, Development Seed
 // Github.js is freely distributable under the MIT license.
 // For all details and documentation:
 // http://substance.io/michael/github
 
-(function() {
-
+define(['underscore', 'base64'], function(_, Base64) {
   // Initial Setup
   // -------------
-
-  var XMLHttpRequest, Base64, _;
-  if (typeof exports !== 'undefined') {
-      XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
-      _ = require('underscore');
-      Base64 = require('./lib/base64.js');
-  }else{
-      _ = window._;
-      Base64 = window.Base64;
-  }
-  //prefer native XMLHttpRequest always
-  if (typeof window !== 'undefined' && typeof window.XMLHttpRequest !== 'undefined'){
-      XMLHttpRequest = window.XMLHttpRequest;
-  }
-
 
   var API_URL = 'https://api.github.com';
 
   var Github = function(options) {
-
     // HTTP Request Abstraction
     // =======
     //
@@ -52,17 +35,18 @@
               cb({path: path, request: this, error: this.status});
             }
           }
-        }
-      };
+        };
+      }
       xhr.setRequestHeader('Accept','application/vnd.github.raw+json');
       xhr.setRequestHeader('Content-Type','application/json;charset=UTF-8');
       if ((options.token) || (options.username && options.password)) {
-           xhr.setRequestHeader('Authorization', options.token
-             ? 'token '+ options.token
-             : 'Basic ' + Base64.encode(options.username + ':' + options.password)
-           );
-         }
-      data ? xhr.send(JSON.stringify(data)) : xhr.send();
+        xhr.setRequestHeader('Authorization', options.token ? 'token '+ options.token : 'Basic ' + Base64.encode(options.username + ':' + options.password));
+      }
+      if (data) {
+        xhr.send(JSON.stringify(data));
+      } else {
+        xhr.send();
+      }
       if (sync) return xhr.response;
     }
 
@@ -486,7 +470,7 @@
             sha: ref
           },cb);
         });
-      }
+      };
 
       // Create pull request
       // --------
@@ -757,7 +741,7 @@
 
       this.list = function(options, cb) {
         _request("GET", path, options, function(err, res) {
-          cb(err,res)
+          cb(err,res);
         });
       };
     };
@@ -782,11 +766,9 @@
     };
   };
 
-
-  if (typeof exports !== 'undefined') {
-    // Github = exports;
-    module.exports = Github;
-  } else {
-    window.Github = Github;
-  }
-}).call(this);
+  return {
+      'getNewGithub': function (options) {
+          return new Github(options);
+      }
+  };
+});

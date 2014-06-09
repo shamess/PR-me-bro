@@ -1,4 +1,4 @@
-(function (prmebro) {
+define(function () {
     "use strict";
 
     var eventListener = function () {
@@ -30,7 +30,5 @@
         };
     }();
 
-    prmebro.getEventListener = function () {
-        return eventListener;
-    };
-}(prmebro));
+    return eventListener;
+});

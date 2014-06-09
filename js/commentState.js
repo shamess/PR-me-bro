@@ -1,4 +1,4 @@
-(function (prmebro, $, dust) {
+define(['prmebro', 'jquery', 'dust-full', 'eventListener', 'github'], function (prmebro, $, dust, eventListener, Github) {
     "use strict";
 
     function bindPopoverAction($commentSection) {
@@ -35,7 +35,7 @@
     }
 
     function loadCommentStates() {
-        var github = prmebro.github;
+        var github = Github.getNewGithub({username: prmebro.user.username, password: prmebro.user.password});
 
         function passPRToLoadAgregator(pullRequest) {
             return function (error, comments) {
@@ -53,5 +53,5 @@
         }
     }
 
-    prmebro.getEventListener().bind("pullrequests.loaded", loadCommentStates);
-}(prmebro, jQuery, dust));
+    eventListener.bind("pullrequests.loaded", loadCommentStates);
+});
