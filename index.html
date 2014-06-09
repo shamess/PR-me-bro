@@ -29,7 +29,7 @@
                     <li class="block" id="pull-request-{id}">
                         <div class="block">
                             <p class="left"><a href="{html_url}" target="_blank" class="pr-title">{title}</a></p>
-                            <p class="right pr-comments">Loading comment state...</p>
+                            <div class="right pr-comment"><p>Loading comment state...</p></div>
                         </div>
                         <div class="block">
                             <p class="left"><a href="{head.repo.html_url}" target="_blank">{head.repo.name}</a></p>
@@ -37,6 +37,11 @@
                     </li>
                 {/pullRequests}
             </ul>
+        </script>
+
+        <script id="pullrequest-comment-state" type="text/dust-template">
+            <p class="comment-text">{userCommentCount}/{commentCount} comments</p>
+            <p class="pop-over">That's {commentCount} comments, and {userCommentCount} of them are by you.</p>
         </script>
     </head>
     <body id="container">

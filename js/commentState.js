@@ -1,7 +1,27 @@
-(function (prmebro, $) {
+(function (prmebro, $, dust) {
     "use strict";
 
-    function loadComments(error, comments, pullRequest) {
+    function bindPopoverAction($commentSection) {
+        $commentSection.hover(function () {
+            $('.pop-over', $commentSection).show();
+        }, function() {
+            $('.pop-over', $commentSection).hide();
+        });
+    }
+
+    function displayComment(pullRequest, commentCount, userCommentCount) {
+        var templateSource = $('#pullrequest-comment-state').html(),
+            compiledTemplate = dust.compile(templateSource, "pull-request-comment-state");
+
+        dust.loadSource(compiledTemplate);
+        dust.render("pull-request-comment-state", {commentCount: commentCount, userCommentCount: userCommentCount}, function (error, output) {
+            $('#pull-request-' + pullRequest.id + ' .pr-comment').html(output);
+
+            bindPopoverAction($('#pull-request-' + pullRequest.id + ' .pr-comment'));
+        });
+    }
+
+    function aggregateCommentData(error, comments, pullRequest) {
         var commentCount = comments.length,
             userCommentCount = 0;
 
@@ -11,15 +31,15 @@
             }
         }
 
-        $('#pull-request-' + pullRequest.id + ' .pr-comments').html(userCommentCount + "/" + commentCount + " comments");
+        displayComment(pullRequest, commentCount, userCommentCount);
     }
 
     function loadCommentStates() {
         var github = prmebro.github;
 
-        function passPRToLoadComments(pullRequest) {
+        function passPRToLoadAgregator(pullRequest) {
             return function (error, comments) {
-                loadComments(error, comments, pullRequest);
+                aggregateCommentData(error, comments, pullRequest);
             };
         }
 
@@ -29,9 +49,9 @@
             }
 
             var pullRequest = prmebro.pullRequests[pullRequestKey];
-            github.getRepo(pullRequest.head.repo.owner.login, pullRequest.head.repo.name).getComments(pullRequest.number, passPRToLoadComments(pullRequest));
+            github.getRepo(pullRequest.head.repo.owner.login, pullRequest.head.repo.name).getComments(pullRequest.number, passPRToLoadAgregator(pullRequest));
         }
     }
 
     prmebro.getEventListener().bind("pullrequests.loaded", loadCommentStates);
-}(prmebro, jQuery));
+}(prmebro, jQuery, dust));
