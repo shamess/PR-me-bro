@@ -7,21 +7,7 @@
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
         <link rel="stylesheet" href="css/default.css" />
         <link rel="stylesheet" href="css/login.css" />
-        <script>
-            var github,
-                prmebro = {
-                    user: { 'username': null, 'password': null, validated: false }
-                };
-        </script>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.js"></script>
-        <script src="js/underscore.js"></script>
-        <script src="js/dust-full.js"></script>
-        <script src="js/base64.js"></script>
-        <script src="js/github.js"></script>
-        <script src="js/eventListener.js"></script>
-        <script src="js/login.js"></script>
-        <script src="js/pullRequest.js"></script>
-        <script src="js/commentState.js"></script>
+        <script data-main="js/main.js" src="js/require.js"></script>
 
         <script id="pullrequest-list-view" type="text/dust-template">
             <ul class="pull-request-list">

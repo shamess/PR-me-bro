@@ -1,4 +1,4 @@
-(function ($, prmebro) {
+define(['jquery', 'prmebro', 'github', 'eventListener'], function ($, prmebro, Github, eventListener) {
     "use strict";
 
     function attemptLogin(github, callback) {
@@ -14,7 +14,7 @@
             prmebro.user.username = $('#username').val();
             prmebro.user.password = $('#password').val();
 
-            prmebro.github = new Github({
+            prmebro.github = Github.getNewGithub({
                 username: prmebro.user.username,
                 password: prmebro.user.password,
                 auth: "basic"
@@ -24,11 +24,11 @@
                 if (loginSuccess) {
                     prmebro.user.validated = true;
                     $('.password button').text("loading...");
-                    prmebro.getEventListener().trigger("user.loggedin");
+                    eventListener.trigger("user.loggedin");
                 } else {
                     $('.password button').text("try again");
                 }
             });
         });
     });
-}(jQuery, prmebro));
+});
